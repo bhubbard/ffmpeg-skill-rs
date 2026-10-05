@@ -1,0 +1,50 @@
+[package]
+name = "ffmpeg-skill-rs"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.80"
+authors = ["Brandon Hubbard", "ffmpeg-skill-rs contributors"]
+license = "MIT"
+description = "High-performance native Rust fork of ffmpeg-skill: deterministic FFmpeg tools and Model Context Protocol (MCP) server for AI agents"
+repository = "https://github.com/bhubbard/ffmpeg-skill-rs"
+readme = "README.md"
+keywords = ["ffmpeg", "mcp", "video-editing", "ai-agent", "model-context-protocol"]
+categories = ["command-line-utilities", "multimedia::video"]
+
+[lib]
+name = "ffmpeg_skill"
+path = "src/lib.rs"
+
+[[bin]]
+name = "ffmpeg-skill"
+path = "src/main.rs"
+
+[[bin]]
+name = "fms"
+path = "src/bin/fms.rs"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive", "env"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0", features = ["preserve_order"] }
+tokio = { version = "1.40", features = ["rt-multi-thread", "macros", "process", "io-util", "io-std", "signal", "time", "sync"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+thiserror = "2.0"
+colored = "3.0"
+which = "7.0"
+regex = "1.10"
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.10", features = ["v4"] }
+tempfile = "3.12"
+async-trait = "0.1"
+
+[dev-dependencies]
+tokio-test = "0.4"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = true
